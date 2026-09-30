@@ -1,0 +1,434 @@
+/* =================================
+   PROFILE PAGE
+================================= */
+
+.profile-page {
+    width: 100%;
+    padding: 35px 45px;
+    box-sizing: border-box;
+}
+
+
+/* =================================
+   PROFILE TITLE
+================================= */
+
+.profile-title {
+    text-align: center;
+
+    color: #f5f5f5;
+
+    font-size: 36px;
+    font-weight: 800;
+
+    margin: 0 0 35px 0;
+
+    position: relative;
+}
+
+.profile-title::after {
+    content: "";
+
+    display: block;
+
+    width: 75px;
+    height: 3px;
+
+    margin: 12px auto 0;
+
+    background: #e45b35;
+
+    border-radius: 5px;
+
+    box-shadow: 0 0 10px rgba(228, 91, 53, 0.5);
+}
+
+
+/* =================================
+   PROFILE CARD
+================================= */
+
+.profile-card {
+    width: 100%;
+    max-width: 970px;
+
+    margin: 0 auto;
+
+    padding: 28px 40px;
+
+    box-sizing: border-box;
+
+    background: #202427;
+
+    border: 1px solid #34383c;
+
+    border-radius: 16px;
+
+    box-shadow:
+        0 15px 40px rgba(0, 0, 0, 0.35);
+
+    color: #ffffff;
+}
+
+
+/* =================================
+   PROFILE ROW
+================================= */
+
+.profile-row {
+    display: flex;
+
+    align-items: center;
+
+    gap: 25px;
+
+    min-height: 105px;
+
+    padding: 20px 5px;
+
+    border-bottom: 1px solid #34383c;
+
+    box-sizing: border-box;
+}
+
+
+/* =================================
+   PROFILE ICON
+================================= */
+
+.profile-icon {
+    width: 64px;
+    height: 64px;
+
+    min-width: 64px;
+
+    display: flex;
+
+    align-items: center;
+    justify-content: center;
+
+    background: rgba(228, 91, 53, 0.12);
+
+    border: 1px solid rgba(228, 91, 53, 0.25);
+
+    border-radius: 12px;
+
+    color: #ff7043;
+
+    font-size: 25px;
+
+    box-shadow:
+        0 5px 15px rgba(228, 91, 53, 0.08);
+}
+
+
+/* =================================
+   PROFILE INFORMATION
+================================= */
+
+.profile-info {
+    display: flex;
+
+    flex-direction: column;
+
+    align-items: flex-start;
+
+    justify-content: center;
+
+    gap: 7px;
+
+    flex: 1;
+
+    min-width: 0;
+}
+
+
+/* =================================
+   LABEL
+================================= */
+
+.profile-label {
+    display: block;
+
+    color: #aeb4ba;
+
+    font-size: 15px;
+
+    font-weight: 500;
+}
+
+
+/* =================================
+   VALUE
+================================= */
+
+.profile-value {
+    display: block;
+
+    color: #ffffff;
+
+    font-size: 20px;
+
+    font-weight: 600;
+
+    word-break: break-word;
+}
+
+
+/* =================================
+   PROFILE ACTIONS
+================================= */
+
+.profile-actions {
+    display: flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+    gap: 16px;
+
+    padding: 28px 5px 5px;
+}
+
+
+/* =================================
+   BUTTONS
+================================= */
+
+.change-password-btn,
+.edit-profile-btn {
+    min-width: 190px;
+
+    height: 48px;
+
+    padding: 0 24px;
+
+    display: inline-flex;
+
+    align-items: center;
+    justify-content: center;
+
+    gap: 9px;
+
+    border: none;
+
+    border-radius: 8px;
+
+    color: #ffffff;
+
+    font-size: 14px;
+
+    font-weight: 700;
+
+    cursor: pointer;
+
+    transition:
+        transform 0.2s,
+        box-shadow 0.2s,
+        background 0.2s;
+}
+
+
+/* =================================
+   EDIT PROFILE
+================================= */
+
+.edit-profile-btn {
+    background: linear-gradient(
+        135deg,
+        #ef7043,
+        #d9472f
+    );
+
+    box-shadow:
+        0 7px 18px rgba(217, 71, 47, 0.20);
+}
+
+
+.edit-profile-btn:hover {
+    background: linear-gradient(
+        135deg,
+        #ff8050,
+        #e44732
+    );
+
+    transform: translateY(-2px);
+
+    box-shadow:
+        0 10px 22px rgba(217, 71, 47, 0.30);
+}
+
+
+/* =================================
+   CHANGE PASSWORD
+================================= */
+
+.change-password-btn {
+    background: linear-gradient(
+        135deg,
+        #ef7043,
+        #d9472f
+    );
+
+    box-shadow:
+        0 7px 18px rgba(217, 71, 47, 0.20);
+}
+
+
+.change-password-btn:hover {
+    background: linear-gradient(
+        135deg,
+        #ff8050,
+        #e44732
+    );
+
+    transform: translateY(-2px);
+
+    box-shadow:
+        0 10px 22px rgba(217, 71, 47, 0.30);
+}
+
+
+/* =================================
+   BUTTON ICON
+================================= */
+
+.profile-actions svg {
+    font-size: 15px;
+}
+
+
+/* =================================
+   TABLET
+================================= */
+
+@media (max-width: 992px) {
+
+    .profile-page {
+        padding: 30px 25px;
+    }
+
+    .profile-card {
+        max-width: 850px;
+
+        padding: 25px 30px;
+    }
+}
+
+
+/* =================================
+   MOBILE
+================================= */
+
+@media (max-width: 768px) {
+
+    .profile-page {
+        padding: 25px 16px;
+    }
+
+
+    .profile-title {
+        font-size: 30px;
+
+        margin-bottom: 28px;
+    }
+
+
+    .profile-card {
+        padding: 20px;
+    }
+
+
+    .profile-row {
+        gap: 18px;
+
+        padding: 18px 0;
+
+        min-height: 95px;
+    }
+
+
+    .profile-icon {
+        width: 55px;
+        height: 55px;
+
+        min-width: 55px;
+
+        font-size: 21px;
+    }
+
+
+    .profile-value {
+        font-size: 17px;
+    }
+
+
+    .profile-label {
+        font-size: 14px;
+    }
+
+
+    .profile-actions {
+        flex-direction: column;
+
+        gap: 12px;
+
+        padding-top: 24px;
+    }
+
+
+    .change-password-btn,
+    .edit-profile-btn {
+        width: 100%;
+
+        min-width: 0;
+    }
+}
+
+
+/* =================================
+   SMALL MOBILE
+================================= */
+
+@media (max-width: 480px) {
+
+    .profile-page {
+        padding: 20px 12px;
+    }
+
+
+    .profile-title {
+        font-size: 27px;
+    }
+
+
+    .profile-card {
+        padding: 16px;
+    }
+
+
+    .profile-row {
+        gap: 14px;
+    }
+
+
+    .profile-icon {
+        width: 50px;
+        height: 50px;
+
+        min-width: 50px;
+
+        font-size: 19px;
+    }
+
+
+    .profile-value {
+        font-size: 16px;
+    }
+
+
+    .profile-label {
+        font-size: 13px;
+    }
+}

@@ -1,0 +1,389 @@
+/* =================================
+   REGISTER PAGE
+================================= */
+
+.register-page {
+    min-height: 100vh;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    padding: 40px 20px;
+
+    box-sizing: border-box;
+
+    background:
+        radial-gradient(
+            circle at 20% 20%,
+            rgba(221, 91, 48, 0.16),
+            transparent 35%
+        ),
+        radial-gradient(
+            circle at 80% 80%,
+            rgba(221, 91, 48, 0.10),
+            transparent 35%
+        ),
+        #17191b;
+}
+
+
+/* =================================
+   REGISTER CARD
+================================= */
+
+.register-card {
+    width: 100%;
+    max-width: 550px;
+
+    padding: 42px 40px;
+
+    box-sizing: border-box;
+
+    background: #202427;
+
+    border: 1px solid #34383c;
+
+    border-radius: 18px;
+
+    box-shadow:
+        0 20px 50px rgba(0, 0, 0, 0.45),
+        0 0 35px rgba(221, 91, 48, 0.06);
+
+    color: #ffffff;
+}
+
+
+/* =================================
+   TITLE
+================================= */
+
+.register-title {
+    margin: 0;
+
+    text-align: center;
+
+    font-size: 46px;
+    font-weight: 800;
+
+    letter-spacing: -1px;
+
+    background: linear-gradient(
+        90deg,
+        #ff7a45,
+        #d83b2d
+    );
+
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
+
+/* =================================
+   SUBTITLE
+================================= */
+
+.register-subtitle {
+    margin: 12px 0 32px;
+
+    text-align: center;
+
+    color: #aeb4ba;
+
+    font-size: 16px;
+
+    line-height: 1.5;
+}
+
+
+/* =================================
+   FORM LABEL
+================================= */
+
+.register-card .form-label {
+    display: block;
+
+    margin-bottom: 8px;
+
+    color: #f1f1f1;
+
+    font-size: 15px;
+
+    font-weight: 600;
+}
+
+
+/* =================================
+   INPUT GROUP
+================================= */
+
+.register-card .input-group {
+    width: 100%;
+
+    margin-bottom: 20px;
+}
+
+
+/* =================================
+   INPUT ICON
+================================= */
+
+.register-card .input-group-text {
+    min-width: 52px;
+
+    display: flex;
+
+    align-items: center;
+    justify-content: center;
+
+    background: #292d30;
+
+    border: 1px solid #3a3f43;
+
+    color: #ff7043;
+
+    font-size: 17px;
+}
+
+
+/* =================================
+   INPUT
+================================= */
+
+.register-card .form-control {
+    height: 50px;
+
+    background: #1a1d1f;
+
+    border: 1px solid #3a3f43;
+
+    color: #ffffff;
+
+    font-size: 15px;
+
+    box-shadow: none;
+}
+
+
+.register-card .form-control::placeholder {
+    color: #777e84;
+}
+
+
+/* =================================
+   INPUT FOCUS
+================================= */
+
+.register-card .form-control:focus {
+    background: #1a1d1f;
+
+    color: #ffffff;
+
+    border-color: #e45b35;
+
+    box-shadow:
+        0 0 0 3px rgba(228, 91, 53, 0.12);
+}
+
+
+.register-card .input-group:focus-within .input-group-text {
+    border-color: #e45b35;
+
+    color: #ff7043;
+}
+
+
+/* =================================
+   PASSWORD EYE
+================================= */
+
+.register-card .input-group-text:last-child {
+    cursor: pointer;
+
+    transition: 0.2s;
+}
+
+
+.register-card .input-group-text:last-child:hover {
+    background: #34383c;
+
+    color: #ff9b78;
+}
+
+
+/* =================================
+   CREATE ACCOUNT BUTTON
+================================= */
+
+.register-card .btn-success {
+    width: 100%;
+
+    height: 52px;
+
+    margin-top: 8px;
+
+    border: none;
+
+    border-radius: 8px;
+
+    background: linear-gradient(
+        135deg,
+        #ef7043,
+        #d93f2e
+    );
+
+    color: #ffffff;
+
+    font-size: 16px;
+
+    font-weight: 700;
+
+    box-shadow:
+        0 8px 20px rgba(217, 63, 46, 0.22);
+
+    transition:
+        transform 0.2s,
+        box-shadow 0.2s;
+}
+
+
+.register-card .btn-success:hover {
+    background: linear-gradient(
+        135deg,
+        #ff8050,
+        #e44732
+    );
+
+    transform: translateY(-2px);
+
+    box-shadow:
+        0 12px 25px rgba(217, 63, 46, 0.30);
+}
+
+
+.register-card .btn-success:active {
+    transform: translateY(0);
+}
+
+
+/* =================================
+   LOGIN LINK
+================================= */
+
+.register-card .text-center {
+    color: #aeb4ba;
+
+    font-size: 15px;
+}
+
+
+.register-card .text-center a {
+    color: #ff7043;
+
+    font-weight: 600;
+
+    text-decoration: none;
+
+    transition: 0.2s;
+}
+
+
+.register-card .text-center a:hover {
+    color: #ff9b78;
+
+    text-decoration: underline;
+}
+
+
+/* =================================
+   ERROR
+================================= */
+
+.register-card .alert-danger {
+    background: rgba(220, 53, 69, 0.12);
+
+    border: 1px solid rgba(220, 53, 69, 0.35);
+
+    color: #ff8d98;
+
+    border-radius: 8px;
+
+    margin-bottom: 20px;
+}
+
+
+/* =================================
+   SUCCESS
+================================= */
+
+.register-card .alert-success {
+    background: rgba(25, 135, 84, 0.12);
+
+    border: 1px solid rgba(25, 135, 84, 0.35);
+
+    color: #6ee7a3;
+
+    border-radius: 8px;
+}
+
+
+/* =================================
+   MOBILE
+================================= */
+
+@media (max-width: 768px) {
+
+    .register-page {
+        padding: 25px 16px;
+    }
+
+    .register-card {
+        max-width: 500px;
+
+        padding: 38px 28px;
+    }
+
+    .register-title {
+        font-size: 40px;
+    }
+
+    .register-subtitle {
+        font-size: 15px;
+
+        margin-bottom: 28px;
+    }
+}
+
+
+/* =================================
+   SMALL MOBILE
+================================= */
+
+@media (max-width: 480px) {
+
+    .register-page {
+        padding: 20px 12px;
+    }
+
+    .register-card {
+        padding: 32px 20px;
+
+        border-radius: 15px;
+    }
+
+    .register-title {
+        font-size: 36px;
+    }
+
+    .register-subtitle {
+        font-size: 14px;
+    }
+
+    .register-card .form-control {
+        height: 48px;
+    }
+
+    .register-card .btn-success {
+        height: 50px;
+    }
+}

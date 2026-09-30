@@ -1,0 +1,413 @@
+/* =================================
+   DASHBOARD CONTAINER
+================================= */
+
+.dashboard-container {
+    width: 100%;
+
+    max-width: 1400px;
+
+    margin: 0 auto;
+
+    padding: 38px 42px;
+
+    box-sizing: border-box;
+}
+
+
+/* =================================
+   TITLE
+================================= */
+
+.dashboard-title {
+    text-align: center;
+
+    font-size: 34px;
+
+    font-weight: 800;
+
+    color: #f1f1f1;
+
+    margin-bottom: 35px;
+
+    letter-spacing: -0.7px;
+}
+
+
+/* =================================
+   STATISTICS CARDS
+================================= */
+
+.dashboard-card {
+    width: 100%;
+
+    background:
+        linear-gradient(
+            145deg,
+            #242628,
+            #1d1f21
+        );
+
+    border: 1px solid #35383b;
+
+    border-radius: 14px;
+
+    min-height: 210px;
+
+    box-shadow:
+        0 12px 30px rgba(0, 0, 0, 0.25);
+
+    transition:
+        transform 0.25s ease,
+        box-shadow 0.25s ease,
+        border-color 0.25s ease;
+
+    overflow: hidden;
+}
+
+
+.dashboard-card:hover {
+    transform: translateY(-6px);
+
+    border-color: #b85d3e;
+
+    box-shadow:
+        0 18px 35px rgba(0, 0, 0, 0.35),
+        0 0 25px rgba(184, 93, 62, 0.08);
+}
+
+
+/* =================================
+   CARD BODY
+================================= */
+
+.dashboard-card .card-body {
+    padding: 30px;
+
+    display: flex;
+
+    flex-direction: column;
+
+    align-items: center;
+
+    justify-content: center;
+
+    text-align: center;
+}
+
+
+/* =================================
+   ICON
+================================= */
+
+.icon-box {
+    width: 60px;
+
+    height: 60px;
+
+    border-radius: 14px;
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+    font-size: 25px;
+
+    transition: 0.25s ease;
+}
+
+
+/* Blue */
+
+.icon-box.blue {
+    background: rgba(61, 126, 255, 0.13);
+
+    color: #5d96ff;
+
+    border: 1px solid rgba(93, 150, 255, 0.15);
+}
+
+
+/* Yellow */
+
+.icon-box.yellow {
+    background: rgba(232, 159, 50, 0.13);
+
+    color: #f0aa45;
+
+    border: 1px solid rgba(240, 170, 69, 0.15);
+}
+
+
+/* Green */
+
+.icon-box.green {
+    background: rgba(53, 180, 117, 0.13);
+
+    color: #4fd18d;
+
+    border: 1px solid rgba(79, 209, 141, 0.15);
+}
+
+
+/* =================================
+   CARD TITLES
+================================= */
+
+.dashboard-card h5 {
+    width: 100%;
+
+    text-align: center;
+
+    font-size: 17px;
+
+    font-weight: 600;
+
+    color: #aaaeb2;
+
+    margin-top: 22px;
+
+    margin-bottom: 0;
+}
+
+
+/* =================================
+   NUMBERS
+================================= */
+
+.dashboard-number {
+    width: 100%;
+
+    text-align: center;
+
+    font-size: 32px;
+
+    font-weight: 800;
+
+    color: #f5f5f5;
+
+    margin-top: 8px;
+}
+
+
+/* =================================
+   RECENT STUDENTS
+================================= */
+
+.recent-students-card {
+    width: 100%;
+
+    margin-top: 30px;
+
+    background:
+        linear-gradient(
+            145deg,
+            #242628,
+            #1d1f21
+        );
+
+    border: 1px solid #35383b;
+
+    border-radius: 14px;
+
+    overflow: hidden;
+
+    box-shadow:
+        0 12px 30px rgba(0, 0, 0, 0.25);
+}
+
+
+/* =================================
+   HEADER
+================================= */
+
+.recent-students-card .card-header {
+    background: #202224;
+
+    border-bottom: 1px solid #35383b;
+
+    text-align: left;
+
+    padding: 20px 24px;
+
+    font-size: 20px;
+
+    font-weight: 700;
+
+    color: #f1f1f1;
+}
+
+
+/* =================================
+   RECENT STUDENT
+================================= */
+
+.recent-student {
+    display: flex;
+
+    align-items: center;
+
+    justify-content: space-between;
+
+    gap: 30px;
+
+    padding: 21px 26px;
+
+    border-bottom: 1px solid #303235;
+
+    text-align: left;
+
+    transition: background 0.2s ease;
+}
+
+
+.recent-student:hover {
+    background: #282a2c;
+}
+
+
+.recent-student:last-child {
+    border-bottom: none;
+}
+
+
+.recent-student > div:first-child {
+    text-align: left;
+}
+
+
+.recent-student-name {
+    font-size: 17px;
+
+    font-weight: 700;
+
+    color: #f0f0f0;
+}
+
+
+.recent-student-email {
+    margin-top: 5px;
+
+    font-size: 14px;
+
+    color: #92969a;
+}
+
+
+.recent-student-department {
+    background: rgba(216, 109, 69, 0.13);
+
+    color: #e9825c;
+
+    border: 1px solid rgba(216, 109, 69, 0.18);
+
+    font-size: 13px;
+
+    font-weight: 600;
+
+    padding: 7px 14px;
+
+    border-radius: 20px;
+}
+
+
+/* =================================
+   TABLET
+================================= */
+
+@media (max-width: 992px) {
+
+    .dashboard-container {
+        padding: 30px 24px;
+    }
+
+    .dashboard-title {
+        font-size: 30px;
+    }
+}
+
+
+/* =================================
+   MOBILE
+================================= */
+
+@media (max-width: 768px) {
+
+    .dashboard-container {
+        padding: 25px 16px;
+    }
+
+
+    .dashboard-title {
+        font-size: 27px;
+
+        margin-bottom: 25px;
+    }
+
+
+    .dashboard-card {
+        min-height: 200px;
+
+        margin-bottom: 15px;
+    }
+
+
+    .dashboard-card .card-body {
+        padding: 25px 20px;
+    }
+
+
+    .recent-student {
+        flex-direction: column;
+
+        align-items: flex-start;
+
+        gap: 12px;
+    }
+
+
+    .recent-student-department {
+        align-self: flex-start;
+    }
+}
+
+
+/* =================================
+   SMALL MOBILE
+================================= */
+
+@media (max-width: 480px) {
+
+    .dashboard-container {
+        padding: 20px 12px;
+    }
+
+
+    .dashboard-title {
+        font-size: 24px;
+    }
+
+
+    .dashboard-card {
+        min-height: 190px;
+    }
+
+
+    .dashboard-number {
+        font-size: 28px;
+    }
+
+
+    .recent-students-card .card-header {
+        font-size: 18px;
+
+        padding: 17px;
+    }
+
+
+    .recent-student {
+        padding: 19px 17px;
+    }
+}
