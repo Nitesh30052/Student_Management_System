@@ -1,11 +1,11 @@
-const db = require("../config/db");
 const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
+const crypto = require("crypto");
+const db = require("../config/db");
 
-// ==========================
+// ================================
 // REGISTER
-// ==========================
-
+// ================================
 const register = async (req, res) => {
     try {
         const { name, email, password } = req.body;
@@ -16,44 +16,47 @@ const register = async (req, res) => {
             });
         }
 
-        const [existingUser] = await db.query(
-            "SELECT * FROM users WHERE email = ?",
+        // Check if user already exists
+        const existingUser = await db.query(
+            "SELECT id FROM users WHERE email = $1",
             [email]
         );
 
-        if (existingUser.length > 0) {
-            return res.status(409).json({
-                message: "Email already registered",
+        if (existingUser.rows.length > 0) {
+            return res.status(400).json({
+                message: "User already exists",
             });
         }
 
+        // Hash password
         const hashedPassword = await bcrypt.hash(password, 10);
 
-        const [result] = await db.query(
+        // Create user
+        const result = await db.query(
             `INSERT INTO users (name, email, password)
-             VALUES (?, ?, ?)`,
+             VALUES ($1, $2, $3)
+             RETURNING id, name, email`,
             [name, email, hashedPassword]
         );
 
         res.status(201).json({
-            message: "User registered successfully",
-            userId: result.insertId,
+            message: "Registration successful",
+            user: result.rows[0],
         });
 
     } catch (error) {
         console.error("Register error:", error);
 
         res.status(500).json({
-            message: "Failed to register user",
+            message: "Registration failed",
         });
     }
 };
 
 
-// ==========================
+// ================================
 // LOGIN
-// ==========================
-
+// ================================
 const login = async (req, res) => {
     try {
         const { email, password } = req.body;
@@ -64,30 +67,33 @@ const login = async (req, res) => {
             });
         }
 
-        const [users] = await db.query(
-            "SELECT * FROM users WHERE email = ?",
+        // Find user
+        const result = await db.query(
+            "SELECT * FROM users WHERE email = $1",
             [email]
         );
 
-        if (users.length === 0) {
+        if (result.rows.length === 0) {
             return res.status(401).json({
                 message: "Invalid email or password",
             });
         }
 
-        const user = users[0];
+        const user = result.rows[0];
 
-        const passwordMatch = await bcrypt.compare(
+        // Check password
+        const isMatch = await bcrypt.compare(
             password,
             user.password
         );
 
-        if (!passwordMatch) {
+        if (!isMatch) {
             return res.status(401).json({
                 message: "Invalid email or password",
             });
         }
 
+        // Create JWT
         const token = jwt.sign(
             {
                 id: user.id,
@@ -101,9 +107,7 @@ const login = async (req, res) => {
 
         res.status(200).json({
             message: "Login successful",
-
-            token: token,
-
+            token,
             user: {
                 id: user.id,
                 name: user.name,
@@ -115,79 +119,60 @@ const login = async (req, res) => {
         console.error("Login error:", error);
 
         res.status(500).json({
-            message: "Failed to login",
+            message: "Login failed",
         });
     }
 };
 
 
-// ==========================
+// ================================
 // CHANGE PASSWORD
-// ==========================
-
+// ================================
 const changePassword = async (req, res) => {
     try {
+        const userId = req.user.id;
+
         const { currentPassword, newPassword } = req.body;
 
         if (!currentPassword || !newPassword) {
             return res.status(400).json({
-                message:
-                    "Current password and new password are required",
+                message: "Current password and new password are required",
             });
         }
 
-        if (newPassword.length < 6) {
-            return res.status(400).json({
-                message:
-                    "New password must be at least 6 characters",
-            });
-        }
-
-        const userId = req.user.id;
-
-        const [users] = await db.query(
-            "SELECT * FROM users WHERE id = ?",
+        const result = await db.query(
+            "SELECT password FROM users WHERE id = $1",
             [userId]
         );
 
-        if (users.length === 0) {
+        if (result.rows.length === 0) {
             return res.status(404).json({
                 message: "User not found",
             });
         }
 
-        const user = users[0];
+        const user = result.rows[0];
 
-        const passwordMatch = await bcrypt.compare(
+        // Check current password
+        const isMatch = await bcrypt.compare(
             currentPassword,
             user.password
         );
 
-        if (!passwordMatch) {
-            return res.status(401).json({
+        if (!isMatch) {
+            return res.status(400).json({
                 message: "Current password is incorrect",
             });
         }
 
-        const samePassword = await bcrypt.compare(
-            newPassword,
-            user.password
-        );
-
-        if (samePassword) {
-            return res.status(400).json({
-                message:
-                    "New password must be different from current password",
-            });
-        }
-
+        // Hash new password
         const hashedPassword = await bcrypt.hash(
             newPassword,
             10
         );
 
         await db.query(
-            "UPDATE users SET password = ? WHERE id = ?",
+            "UPDATE users SET password = $1 WHERE id = $2",
             [hashedPassword, userId]
         );
 
@@ -205,10 +190,9 @@ const changePassword = async (req, res) => {
 };
 
 
-// ==========================
+// ================================
 // FORGOT PASSWORD
-// ==========================
-
+// ================================
 const forgotPassword = async (req, res) => {
     try {
         const { email } = req.body;
@@ -219,77 +203,84 @@ const forgotPassword = async (req, res) => {
             });
         }
 
-        const [users] = await db.query(
-            "SELECT id FROM users WHERE email = ?",
+        const result = await db.query(
+            "SELECT id FROM users WHERE email = $1",
             [email]
         );
 
-        if (users.length === 0) {
+        if (result.rows.length === 0) {
             return res.status(404).json({
-                message: "No account found with this email",
+                message: "User not found",
             });
         }
 
+        const userId = result.rows[0].id;
+
+        // Generate reset token
+        const resetToken = crypto.randomBytes(32).toString("hex");
+
+        // Token expiry: 15 minutes
+        const resetTokenExpiry = new Date(
+            Date.now() + 15 * 60 * 1000
+        );
+
+        await db.query(
+            `UPDATE users
+             SET reset_token = $1,
+                 reset_token_expiry = $2
+             WHERE id = $3`,
+            [resetToken, resetTokenExpiry, userId]
+        );
+
+        /*
+         * For now, return the token.
+         *
+         * In production, this token should be
+         * sent through email instead.
+         */
         res.status(200).json({
-            message: "Email verified successfully",
+            message: "Password reset token generated",
+            resetToken,
         });
 
     } catch (error) {
         console.error("Forgot password error:", error);
 
         res.status(500).json({
-            message: "Failed to verify email",
+            message: "Failed to process forgot password",
         });
     }
 };
 
 
-// ==========================
+// ================================
 // RESET PASSWORD
-// ==========================
-
+// ================================
 const resetPassword = async (req, res) => {
     try {
-        const { email, newPassword } = req.body;
+        const { token, newPassword } = req.body;
 
-        if (!email || !newPassword) {
+        if (!token || !newPassword) {
             return res.status(400).json({
-                message:
-                    "Email and new password are required",
+                message: "Token and new password are required",
             });
         }
 
-        if (newPassword.length < 6) {
-            return res.status(400).json({
-                message:
-                    "New password must be at least 6 characters",
-            });
-        }
-
-        const [users] = await db.query(
-            "SELECT * FROM users WHERE email = ?",
-            [email]
+        const result = await db.query(
+            `SELECT id
+             FROM users
+             WHERE reset_token = $1
+             AND reset_token_expiry > NOW()`,
+            [token]
         );
 
-        if (users.length === 0) {
-            return res.status(404).json({
-                message: "User not found",
-            });
-        }
-
-        const user = users[0];
-
-        const samePassword = await bcrypt.compare(
-            newPassword,
-            user.password
-        );
-
-        if (samePassword) {
+        if (result.rows.length === 0) {
             return res.status(400).json({
-                message:
-                    "New password must be different from current password",
+                message: "Invalid or expired reset token",
             });
         }
+
+        const userId = result.rows[0].id;
 
         const hashedPassword = await bcrypt.hash(
             newPassword,
@@ -297,8 +288,12 @@ const resetPassword = async (req, res) => {
         );
 
         await db.query(
-            "UPDATE users SET password = ? WHERE id = ?",
-            [hashedPassword, user.id]
+            `UPDATE users
+             SET password = $1,
+                 reset_token = NULL,
+                 reset_token_expiry = NULL
+             WHERE id = $2`,
+            [hashedPassword, userId]
         );
 
         res.status(200).json({
@@ -315,49 +310,54 @@ const resetPassword = async (req, res) => {
 };
 
 
-// ==========================
+// ================================
 // UPDATE PROFILE
-// ==========================
-
+// ================================
 const updateProfile = async (req, res) => {
     try {
         const userId = req.user.id;
-        const { name } = req.body;
 
-        // Check name
-        if (!name || !name.trim()) {
+        const { name, email } = req.body;
+
+        if (!name || !email) {
             return res.status(400).json({
-                message: "Name is required",
+                message: "Name and email are required",
             });
         }
 
-        // Get current user
-        const [users] = await db.query(
-            "SELECT id, name, email FROM users WHERE id = ?",
-            [userId]
+        // Check whether another user already has this email
+        const existingUser = await db.query(
+            `SELECT id
+             FROM users
+             WHERE email = $1
+             AND id != $2`,
+            [email, userId]
         );
 
-        if (users.length === 0) {
+        if (existingUser.rows.length > 0) {
+            return res.status(400).json({
+                message: "Email is already in use",
+            });
+        }
+
+        const result = await db.query(
+            `UPDATE users
+             SET name = $1,
+                 email = $2
+             WHERE id = $3
+             RETURNING id, name, email`,
+            [name, email, userId]
+        );
+
+        if (result.rows.length === 0) {
             return res.status(404).json({
                 message: "User not found",
             });
         }
 
-        // Update name
-        await db.query(
-            "UPDATE users SET name = ? WHERE id = ?",
-            [name.trim(), userId]
-        );
-
-        // Get updated user
-        const [updatedUsers] = await db.query(
-            "SELECT id, name, email FROM users WHERE id = ?",
-            [userId]
-        );
-
         res.status(200).json({
             message: "Profile updated successfully",
-            user: updatedUsers[0],
+            user: result.rows[0],
         });
 
     } catch (error) {
@@ -370,10 +370,9 @@ const updateProfile = async (req, res) => {
 };
 
 
-// ==========================
+// ================================
 // EXPORT
-// ==========================
-
+// ================================
 module.exports = {
     register,
     login,
