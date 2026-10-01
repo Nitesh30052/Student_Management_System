@@ -33,7 +33,7 @@ function Students() {
             }
 
             const response = await fetch(
-                "http://localhost:5000/api/students",
+                "https://student-management-system-30i5.onrender.com/api/students",
                 {
                     headers: {
                         Authorization: `Bearer ${token}`,

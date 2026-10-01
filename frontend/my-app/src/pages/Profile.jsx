@@ -111,7 +111,7 @@ function Profile() {
             }
 
             const response = await fetch(
-            "http://localhost:5000/api/auth/profile",
+            "https://student-management-system-30i5.onrender.com/api/auth/profile",
                 {
                     method: "PUT",
 

@@ -56,7 +56,7 @@ function ResetPassword() {
         try {
 
             const response = await fetch(
-                "http://localhost:5000/api/auth/reset-password",
+                "https://student-management-system-30i5.onrender.com/api/auth/reset-password",
                 {
                     method: "PUT",
                     headers: {

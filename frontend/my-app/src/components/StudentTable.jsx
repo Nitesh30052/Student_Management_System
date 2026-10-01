@@ -24,7 +24,7 @@ function StudentTable({ students, onStudentDeleted }) {
             }
 
             const response = await fetch(
-                `http://localhost:5000/api/students/${id}`,
+                `https://student-management-system-30i5.onrender.com/api/students/${id}`,
                 {
                     method: "DELETE",
 
